@@ -15,7 +15,7 @@ from os import path
 
 # --- get version ---
 version = "unknown"
-with open("quantstats/version.py") as f:
+with open("quantstatsx/version.py") as f:
     line = f.read().strip()
     version = line.replace("version = ", "").replace('"', '')
 # --- /get version ---
@@ -34,7 +34,7 @@ setup(
     version=version,
     description='Portfolio analytics for quants',
     long_description=long_description,
-    url='https://github.com/ranaroussi/quantstats',
+    url='https://github.com/adel-numeus/quantstatsx',
     author='Ran Aroussi',
     author_email='ran@aroussi.com',
     license='Apache Software License',
