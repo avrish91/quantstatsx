@@ -29,6 +29,9 @@ import numpy as _np
 from pandas import DataFrame as _df
 import pandas as _pd
 import seaborn as _sns
+from quantstats.reports import default_periods_per_year, _get_trading_periods
+
+win_year, win_half_year, win_quarter_year = _get_trading_periods(default_periods_per_year)
 
 from .. import (
     stats as _stats,
@@ -755,10 +758,10 @@ def drawdowns_periods(
 def rolling_beta(
     returns,
     benchmark,
-    window1=126,
-    window1_label="6-Months",
-    window2=252,
-    window2_label="12-Months",
+    window1=win_quarter_year,
+    window1_label="3-Months",
+    window2=win_half_year,
+    window2_label="6-Months",
     lw=1.5,
     fontname="Arial",
     grayscale=False,
@@ -799,9 +802,9 @@ def rolling_beta(
 def rolling_volatility(
     returns,
     benchmark=None,
-    period=126,
-    period_label="6-Months",
-    periods_per_year=252,
+    period=win_quarter_year,
+    period_label="3-Months",
+    periods_per_year=default_periods_per_year,
     lw=1.5,
     fontname="Arial",
     grayscale=False,
@@ -843,9 +846,9 @@ def rolling_sharpe(
     returns,
     benchmark=None,
     rf=0.0,
-    period=126,
-    period_label="6-Months",
-    periods_per_year=252,
+    period=win_quarter_year,
+    period_label="3-Months",
+    periods_per_year=default_periods_per_year,
     lw=1.25,
     fontname="Arial",
     grayscale=False,
@@ -893,9 +896,9 @@ def rolling_sortino(
     returns,
     benchmark=None,
     rf=0.0,
-    period=126,
-    period_label="6-Months",
-    periods_per_year=252,
+    period=win_quarter_year,
+    period_label="3-Months",
+    periods_per_year=default_periods_per_year,
     lw=1.25,
     fontname="Arial",
     grayscale=False,

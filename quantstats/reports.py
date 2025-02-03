@@ -35,9 +35,14 @@ except ImportError:
     from IPython.core.display import display as iDisplay, HTML as iHTML
 
 
-def _get_trading_periods(periods_per_year=252):
+
+default_periods_per_year = 365
+
+
+def _get_trading_periods(periods_per_year=default_periods_per_year):
     half_year = _ceil(periods_per_year / 2)
-    return periods_per_year, half_year
+    quarter_year = _ceil(periods_per_year / 4)
+    return periods_per_year, half_year, quarter_year
 
 
 def _match_dates(returns, benchmark):
@@ -59,7 +64,7 @@ def html(
     title="Strategy Tearsheet",
     output=None,
     compounded=True,
-    periods_per_year=252,
+    periods_per_year=default_periods_per_year,
     download_filename="quantstats-tearsheet.html",
     figfmt="svg",
     template_path=None,
@@ -73,7 +78,7 @@ def html(
     if match_dates:
         returns = returns.dropna()
 
-    win_year, win_half_year = _get_trading_periods(periods_per_year)
+    win_year, win_half_year, win_quarter_year = _get_trading_periods(periods_per_year)
 
     tpl = ""
     with open(template_path or __file__[:-4] + ".html") as f:
@@ -497,7 +502,7 @@ def full(
     figsize=(8, 5),
     display=True,
     compounded=True,
-    periods_per_year=252,
+    periods_per_year=default_periods_per_year,
     match_dates=True,
     **kwargs,
 ):
@@ -647,7 +652,7 @@ def basic(
     figsize=(8, 5),
     display=True,
     compounded=True,
-    periods_per_year=252,
+    periods_per_year=default_periods_per_year,
     match_dates=True,
     **kwargs,
 ):
@@ -726,7 +731,7 @@ def metrics(
     mode="basic",
     sep=False,
     compounded=True,
-    periods_per_year=252,
+    periods_per_year=default_periods_per_year,
     prepare_returns=True,
     match_dates=True,
     **kwargs,
@@ -1209,7 +1214,7 @@ def plots(
     figsize=(8, 5),
     mode="basic",
     compounded=True,
-    periods_per_year=252,
+    periods_per_year=default_periods_per_year,
     prepare_returns=True,
     match_dates=True,
     **kwargs,
@@ -1224,7 +1229,7 @@ def plots(
             if isinstance(strategy_colname, str):
                 strategy_colname = list(returns.columns)
 
-    win_year, win_half_year = _get_trading_periods(periods_per_year)
+    win_year, win_half_year, win_quarter_year = _get_trading_periods(periods_per_year)
 
     if match_dates is True:
         returns = returns.dropna()
