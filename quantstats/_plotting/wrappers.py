@@ -29,9 +29,6 @@ import numpy as _np
 from pandas import DataFrame as _df
 import pandas as _pd
 import seaborn as _sns
-from quantstats.reports import default_periods_per_year, _get_trading_periods
-
-win_year, win_half_year, win_quarter_year = _get_trading_periods(default_periods_per_year)
 
 from .. import (
     stats as _stats,
@@ -546,7 +543,7 @@ def yearly_returns(
     figsize=(10, 5),
     ylabel=True,
     subtitle=True,
-    compounded=True,
+    compounded=False,
     savefig=None,
     show=True,
     prepare_returns=True,
@@ -569,7 +566,7 @@ def yearly_returns(
     if compounded:
         returns = returns.resample("YE").apply(_stats.comp)
     else:
-        returns = returns.resample("YE").apply(_df.sum)
+        returns = returns.resample("YE").sum()
     returns = returns.resample("YE").last()
 
     fig = _core.plot_returns_bars(
@@ -758,9 +755,9 @@ def drawdowns_periods(
 def rolling_beta(
     returns,
     benchmark,
-    window1=win_quarter_year,
+    window1=91,
     window1_label="3-Months",
-    window2=win_half_year,
+    window2=182,
     window2_label="6-Months",
     lw=1.5,
     fontname="Arial",
@@ -802,9 +799,9 @@ def rolling_beta(
 def rolling_volatility(
     returns,
     benchmark=None,
-    period=win_quarter_year,
+    period=91,
     period_label="3-Months",
-    periods_per_year=default_periods_per_year,
+    periods_per_year=365,
     lw=1.5,
     fontname="Arial",
     grayscale=False,
@@ -846,9 +843,9 @@ def rolling_sharpe(
     returns,
     benchmark=None,
     rf=0.0,
-    period=win_quarter_year,
+    period=91,
     period_label="3-Months",
-    periods_per_year=default_periods_per_year,
+    periods_per_year=365,
     lw=1.25,
     fontname="Arial",
     grayscale=False,
@@ -896,9 +893,9 @@ def rolling_sortino(
     returns,
     benchmark=None,
     rf=0.0,
-    period=win_quarter_year,
+    period=91,
     period_label="3-Months",
-    periods_per_year=default_periods_per_year,
+    periods_per_year=365,
     lw=1.25,
     fontname="Arial",
     grayscale=False,

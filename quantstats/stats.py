@@ -325,7 +325,7 @@ def rolling_sharpe(
     return res
 
 
-def sortino(returns, rf=0, periods=252, annualize=True, smart=False):
+def sortino(returns, rf=0, periods=365, annualize=True, smart=False):
     """
     Calculates the sortino ratio of access returns
 
